@@ -1,14 +1,6 @@
-/*require( './datos');
-global.test ='finalizado';
-console.log(global.test);
-*/
+const path = require ('path');
 
-/* *******modulo******** */
+const objetoPath = path.parse(__filename);
 
-//console.log();
-
-const datos = require('./datos');
-
-datos.log('hola mundo');
-
-console.log(module);
+console.log(objetoPath);
+console.log("Se muestra solo en nombre:  "+ objetoPath.name);
