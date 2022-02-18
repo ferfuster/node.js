@@ -33,7 +33,7 @@ fs.readdir('./', function(err, files){
 */
 
 //--- Modulo Events
-
+/*
 const EventEmitter =require('events');
 const emitter = new EventEmitter();
 
@@ -45,3 +45,28 @@ emitter.on('mensajeLoger',(arg)=>{
 })
 //registrar el evento
 emitter.emit('mensajeLoger',{id:1, url:'http://prueba.com'});
+*/
+
+//---Modulo HTTP
+
+const http = require('http');
+const server = http.createServer((req, res)=>{
+    if (req.url==='/'){
+        res.write('Hola mundo');
+        res.end();
+    }
+    if(req.url === '/api/productos'){
+        res.write(JSON.stringify(['mouse','teclado','parlante']));
+        res.end();
+    }
+
+
+
+});
+
+/*server.on('connection',(puerto)=>{
+    console.log('nueva conexion...');
+})*/
+
+server.listen(3000);
+console.log(`servidor en puerto 3000...`);
