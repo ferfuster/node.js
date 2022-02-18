@@ -5,4 +5,4 @@ console.log(global.test);
 
 /* *******modulo******** */
 
-
+console.log();

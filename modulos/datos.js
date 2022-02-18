@@ -11,7 +11,7 @@ function dato(mensaje){
 }
 
 //funcion dentro de mismo modulo. Ya que no esta exportada
-function llerDatos(){
+function leerDatos(){
 
 }
 //exporta la funcion "dato" como "log"
