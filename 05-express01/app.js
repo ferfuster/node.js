@@ -1,7 +1,10 @@
 const express= require('express');
+const Joi=require('@hapi/joi');
 const app = express();
 
-const usuarios =[
+app.use(express.json());
+
+const usuarios = [
     {id:1, nombre:"José"},
     {id:2, nombre:"fede"},
     {id:3, nombre:"andres"}
@@ -13,16 +16,36 @@ app.get('/', (req, res)=>{
 });
 
 app.get('/api/usuarios',(req, res)=>{
-    res.send(['grover','luis','ana']);
-})
+    res.send(usuarios);
+   // res.send(["micho", "tito", "negro"]);
+});
 
 app.get('/api/usuarios/:id',(req, res)=>{
     let usuario = usuarios.find(u =>u.id === parseInt(req.params.id));
-    if(!usuario)res.status(404).send('El usuario no fue encontrado...');
+    if(!usuario) res.status(404).send('El usuario no fue encontrado...');
     res.send(usuario);
+});
+
+app.post('/api/usuarios', (req, res)=>{
+    const schema=Joi.object({
+        nombre: Joi.string().min(3).required()
+    });
+    const {error, value}=schema.validate({nombre: req.body.nombre});
+
+    if(!error){
+    const usuario={
+        id: usuarios.length +1,
+        nombre: req.body.nombre
+    };
+    usuarios.push(usuario);
+    res.send(usuario);
+}else{
+    const mensaje=error.details[0].message;
+    res.status(400).send(mensaje);
+    }
 });
 
 const port = process.env.PORT || 3000;
 app.listen(port,()=>{
     console.log(`puerto ${port} iniciado.....`);
-})
+});
