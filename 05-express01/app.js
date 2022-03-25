@@ -45,6 +45,26 @@ app.post('/api/usuarios', (req, res)=>{
     }
 });
 
+app.put('/api/usuarios/:id',(req, res)=>{
+    //encontrar si existe el objeto
+    let usuario=usuarios.find(u=>u.id===parseInt(req.params.id));
+    if(!usuario) res.status(404).send('El usuario no fue encontrado');
+
+const schema=Joi.object({
+    nombre: Joi.string().min(3).required()
+});
+const {error, value}= schema.validate({nombre: req.body.nombre});
+if(error){
+    const mensaje = error.details[0].message;
+    res.status(400).send(mensaje);
+    return;
+}
+usuario.nombre=value.nombre;
+res.send(usuario);
+
+});
+
+
 const port = process.env.PORT || 3000;
 app.listen(port,()=>{
     console.log(`puerto ${port} iniciado.....`);
