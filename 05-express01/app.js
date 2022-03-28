@@ -1,13 +1,12 @@
 const express= require('express');
+const logger= require('./logger');
 const Joi=require('@hapi/joi');
 const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 
-app.use(function(req, res, next){
-    console.log('Logging.....');
-    next();
-})
+app.use(logger);
 
 app.use(function(req, res, next){
     console.log('Autenticando...');
