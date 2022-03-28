@@ -4,6 +4,17 @@ const app = express();
 
 app.use(express.json());
 
+app.use(function(req, res, next){
+    console.log('Logging.....');
+    next();
+})
+
+app.use(function(req, res, next){
+    console.log('Autenticando...');
+    next();
+})
+
+
 const usuarios = [
     {id:1, nombre:"José"},
     {id:2, nombre:"fede"},
